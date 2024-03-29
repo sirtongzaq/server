@@ -46,8 +46,8 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1hr",
     });
-    res.setHeader("Authorization", `Bearer ${token}`);
-    return res.status(200).json({ message: "Login successful" });
+    res.setHeader("x-access-token", `Bearer ${token}`);
+    return res.status(200).json({ message: "Login successful", token });
   } catch (e) {
     console.log(e.message);
     return res.status(500).json({ message: "Login failed" });

@@ -8,6 +8,7 @@ const authService = require("./service/authService");
 const todoService = require("./service/todoService");
 const PORT = process.env.PORT || 3000;
 app.use(cors());
+
 app.use(bodyParser.json());
 
 mongoose
