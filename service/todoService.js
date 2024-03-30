@@ -51,12 +51,12 @@ router.put("/update", async (req, res) => {
 
 router.delete("/delete", async (req, res) => {
   try {
-    const { _id } = req.body;
-    const deleteTodo = await Todo.findByIdAndDelete(_id);
+    const { id } = req.query;
+    const deleteTodo = await Todo.findByIdAndDelete(id);
     if (!deleteTodo) {
       return res.status(404).json({ message: "Todo not found" });
     }
-    return res.status(200).json({ message: `Todo _id:${_id} deleted` });
+    return res.status(200).json({ message: `Todo _id:${id} deleted` });
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: "Todo delete is failed" });
@@ -74,6 +74,24 @@ router.get("/gettodobyuserid", async (req, res) => {
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: "Gettodobyuserid is failed" });
+  }
+});
+
+router.put("/updatestatus", async (req, res) => {
+  try {
+    const { id, status } = req.body;
+    const updateTodo = await Todo.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    if (!updateTodo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+    return res.status(200).json({ message: `Todo _id:${id} update` });
+  } catch (e) {
+    console.error(e.message);
+    return res.status(500).json({ message: "Failed to update todo" });
   }
 });
 
